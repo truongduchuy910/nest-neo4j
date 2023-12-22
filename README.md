@@ -1,9 +1,13 @@
 ## Import module
 
+import packages
+
 ```mjs
 import gql from "graphql-tag";
-import { Neo4jModule } from "nest-neo4j";
+import { Neo4jModule } from "nest-ogm";
 ```
+
+config for connection
 
 ```mjs
 @Module({
@@ -55,7 +59,7 @@ User Node in `UserService` must same with name using in `Neo4jModule.forFeature`
 ```mjs
 import gql from 'graphql-tag';
 import { Injectable, Logger } from '@nestjs/common';
-import { Node } from 'nest-neo4j';
+import { Node } from 'nest-ogm';
 
 export const typeDefs = gql`
   type User {
@@ -64,6 +68,10 @@ export const typeDefs = gql`
   }
 `;
 
+/**
+* Data access layer
+* Will be extends by Service
+*/
 @Injectable()
 export class UserNeo4j {
   logger = new Logger(UserNeo4j.name);
@@ -95,7 +103,7 @@ export class UserNeo4j {
 
 ```mjs
 import { Injectable, Logger } from '@nestjs/common';
-import { Driver, InjectDriver, InjectNode, Node } from 'nest-neo4j';
+import { Driver, InjectDriver, InjectNode, Node } from 'nest-ogm';
 
 import { UserNeo4j } from './user.node';
 
@@ -103,6 +111,9 @@ import { UserNeo4j } from './user.node';
 export class UserService extends UserNeo4j {
   readonly logger = new Logger(UserService.name);
 
+  /**
+    * You can using method findOneById of class UserNeo4j
+    */
   constructor(
     @InjectNode('User') node: Node,
     @InjectDriver() private readonly driver: Driver,
@@ -110,6 +121,9 @@ export class UserService extends UserNeo4j {
     super(node);
   }
 
+  /**
+    * Get driver for cypher
+    */
   getDriver() {
     return this.driver;
   }
@@ -119,7 +133,7 @@ export class UserService extends UserNeo4j {
 ### 3. Import in module
 
 ```mjs
-import { Neo4jModule } from "nest-neo4j";
+import { Neo4jModule } from "nest-ogm";
 import { Module } from "@nestjs/common";
 
 import { UserService } from "./user.service";
