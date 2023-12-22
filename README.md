@@ -1,3 +1,25 @@
+![nestjs module neo4j ogm](https://raw.githubusercontent.com/truongduchuy910/nest-ogm/18e9928e54fc41ef0d41cfe416745d8311fda300/src/public/neo4j-mlem.png)
+
+# Description
+
+Neo4j OGM module for Nest.
+
+# Installation
+
+Using yarn
+
+```
+yarn add nest-ogm
+```
+
+Using npm
+
+```
+npm i nest-ogm
+```
+
+# Quick Start
+
 ## Import module
 
 import packages
@@ -146,3 +168,5 @@ import { typeDefs } from "./user.node";
 })
 export class UserModule {}
 ```
+
+# Support
