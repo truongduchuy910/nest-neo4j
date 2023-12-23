@@ -24,14 +24,14 @@ npm i nest-ogm
 
 import packages
 
-```mjs
+```ts
 import gql from "graphql-tag";
 import { Neo4jModule } from "nest-ogm";
 ```
 
 config for connection
 
-```mjs
+```ts
 @Module({
   imports: [Neo4jModule.forRootAsync({
   useFactory: async () => {
@@ -78,10 +78,10 @@ User Node in `UserService` must same with name using in `Neo4jModule.forFeature`
 
 > `user.node.ts`
 
-```mjs
-import gql from 'graphql-tag';
-import { Injectable, Logger } from '@nestjs/common';
-import { Node } from 'nest-ogm';
+```ts
+import gql from "graphql-tag";
+import { Injectable, Logger } from "@nestjs/common";
+import { Node } from "nest-ogm";
 
 export const typeDefs = gql`
   type User {
@@ -91,12 +91,14 @@ export const typeDefs = gql`
 `;
 
 /**
-* Data access layer
-* Will be extends by Service
-*/
+ * Data access layer (DAL)
+ * Will be extends by Service
+ * We suggest using DAL to call node method.
+ * You can skip if not necessary
+ */
 @Injectable()
 export class UserNeo4j {
-  logger = new Logger(UserNeo4j.name);
+  readonly logger = new Logger(UserNeo4j.name);
   private node: Node;
 
   constructor(node: Node) {
@@ -111,7 +113,6 @@ export class UserNeo4j {
     const nodes = await this.node.find({
       where: { id },
       options: { limit: 1 },
-      selectionSet: fullSetFind,
     });
     const [user] = nodes;
     return user;
@@ -123,29 +124,31 @@ export class UserNeo4j {
 
 > `user.service.ts`
 
-```mjs
-import { Injectable, Logger } from '@nestjs/common';
-import { Driver, InjectDriver, InjectNode, Node } from 'nest-ogm';
+```ts
+import { Injectable, Logger } from "@nestjs/common";
+import { Driver, InjectDriver, InjectNode, Node } from "nest-ogm";
 
-import { UserNeo4j } from './user.node';
+import { UserNeo4j } from "./user.node";
 
 @Injectable()
 export class UserService extends UserNeo4j {
   readonly logger = new Logger(UserService.name);
 
   /**
-    * You can using method findOneById of class UserNeo4j
-    */
+   * You can using method findOneById of class UserNeo4j
+   */
   constructor(
-    @InjectNode('User') node: Node,
+    /* this inject dependent on Neo4jModule.forFeature */
+    @InjectNode("User") node: Node,
+    /* this inject dependent on Neo4jModule.forRootAsync */
     @InjectDriver() private readonly driver: Driver,
   ) {
     super(node);
   }
 
   /**
-    * Get driver for cypher
-    */
+   * Get driver for cypher
+   */
   getDriver() {
     return this.driver;
   }
@@ -154,7 +157,7 @@ export class UserService extends UserNeo4j {
 
 ### 3. Import in module
 
-```mjs
+```ts
 import { Neo4jModule } from "nest-ogm";
 import { Module } from "@nestjs/common";
 
