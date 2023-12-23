@@ -1,6 +1,6 @@
 {
   "name": "nest-ogm",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Neo4j driver for NestJS",
   "main": "index.js",
   "scripts": {
