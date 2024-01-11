@@ -74,7 +74,9 @@ export async function createNeo4jDriver(
   username: string,
   password: string,
 ): Promise<Driver> {
-  const driver = neo4j.driver(uri, neo4j.auth.basic(username, password));
+  const driver = neo4j.driver(uri, neo4j.auth.basic(username, password), {
+    disableLosslessIntegers: true,
+  });
   return driver;
 }
 

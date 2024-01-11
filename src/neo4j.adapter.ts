@@ -5,7 +5,9 @@ export class Neo4jAdapter {
   driver: Driver;
 
   constructor(uri: string, username: string, password: string) {
-    this.driver = neo4j.driver(uri, neo4j.auth.basic(username, password));
+    this.driver = neo4j.driver(uri, neo4j.auth.basic(username, password), {
+      disableLosslessIntegers: true,
+    });
   }
 
   async heathcheck() {
