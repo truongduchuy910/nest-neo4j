@@ -2,12 +2,12 @@
   "name": "nest-ogm",
   "version": "1.0.3",
   "description": "Neo4j driver for NestJS",
-  "main": "index.js",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
   "scripts": {
     "format": "prettier --write \"src/**/*.{ts,tsx}\"",
     "build": "rm -fr dist; tsup",
-    "postbuild": "cp -r package.json dist; cp -r README.md dist;",
-    "postversion": "cp -r package.json ..;",
     "semantic-release": "semantic-release"
   },
   "author": "truongduchuy910",
