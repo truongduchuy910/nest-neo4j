@@ -1,17 +1,16 @@
 import neo4j from "neo4j-driver";
-import type { Driver } from "neo4j-driver-core";
 
 export class Neo4jAdapter {
-  driver: Driver;
+  driver?: any;
 
   constructor(uri: string, username: string, password: string) {
     this.driver = neo4j.driver(uri, neo4j.auth.basic(username, password), {
       disableLosslessIntegers: true,
-    });
+    }) as any;
   }
 
   async heathcheck() {
-    return this.driver.verifyConnectivity().then((info) => {
+    return this.driver.verifyConnectivity().then((info: any) => {
       console.log(info);
     });
   }
