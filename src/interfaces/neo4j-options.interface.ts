@@ -1,4 +1,4 @@
-import { ModuleMetadata, Type } from "@nestjs/common";
+import { ModuleMetadata, Type } from '@nestjs/common';
 
 export interface Neo4jModuleOptions {
   uri: string;
@@ -14,11 +14,11 @@ export interface Neo4jOptionsFactory {
 
 export type Neo4jModuleFactoryOptions = Omit<
   Neo4jModuleOptions,
-  "connectionName"
+  'connectionName'
 >;
 
 export interface Neo4jModuleAsyncOptions
-  extends Pick<ModuleMetadata, "imports"> {
+  extends Pick<ModuleMetadata, 'imports'> {
   connectionName?: string;
   useExisting?: Type<Neo4jOptionsFactory>;
   useClass?: Type<Neo4jOptionsFactory>;

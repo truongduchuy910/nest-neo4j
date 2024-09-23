@@ -1,4 +1,4 @@
-import neo4j from "neo4j-driver";
+import neo4j from 'neo4j-driver';
 
 export class Neo4jAdapter {
   driver?: any;

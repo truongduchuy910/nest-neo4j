@@ -1,5 +1,5 @@
-import type { Model } from "@neo4j/graphql-ogm";
-import { ASTNode } from "graphql/language";
+import type { Model } from '@neo4j/graphql-ogm';
+import { ASTNode } from 'graphql/language';
 
 export type Node = Model;
 

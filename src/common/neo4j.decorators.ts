@@ -1,5 +1,5 @@
-import { Inject } from "@nestjs/common";
-import { getDriverToken, getNodeToken, getOGMToken } from "./neo4j.utils";
+import { Inject } from '@nestjs/common';
+import { getDriverToken, getNodeToken, getOGMToken } from './neo4j.utils';
 
 /**
  * get node

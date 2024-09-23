@@ -1,11 +1,11 @@
-import { Logger } from "@nestjs/common";
-import { Observable } from "rxjs";
-import { delay, retryWhen, scan } from "rxjs/operators";
+import { Logger } from '@nestjs/common';
+import { Observable } from 'rxjs';
+import { delay, retryWhen, scan } from 'rxjs/operators';
 import {
   DEFAULT_DB_CONNECTION,
   DEFAULT_OGM,
   DEFAULT_TYPES,
-} from "../neo4j.constants";
+} from '../neo4j.constants';
 
 /**
  * Token for inject node
@@ -48,7 +48,7 @@ export function handleRetry(
   retryAttempts = 9,
   retryDelay = 3000,
 ): <T>(source: Observable<T>) => Observable<T> {
-  const logger = new Logger("MongooseModule");
+  const logger = new Logger('MongooseModule');
   return <T>(source: Observable<T>) =>
     source.pipe(
       retryWhen((e) =>
@@ -58,7 +58,7 @@ export function handleRetry(
               `Unable to connect to the database. Retrying (${
                 errorCount + 1
               })...`,
-              "",
+              '',
             );
             if (errorCount + 1 >= retryAttempts) {
               throw error;

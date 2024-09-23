@@ -1,16 +1,16 @@
-import { OGM } from "@neo4j/graphql-ogm";
-import neo4j, { Driver } from "neo4j-driver";
-import { Provider } from "@nestjs/common";
+import { OGM } from '@neo4j/graphql-ogm';
+import neo4j, { Driver } from 'neo4j-driver';
+import { Provider } from '@nestjs/common';
 import {
   getDriverToken,
   getNodeToken,
   getOGMToken,
   getTypeDefsToken,
-} from "./common/neo4j.utils";
-import { Neo4jModuleFactoryOptions, NodeDefinition } from "./interfaces";
-import { print } from "graphql/language";
-import { mergeTypeDefs } from "@graphql-tools/merge";
-import { NEO4J_MODULE_OPTIONS } from "./neo4j.constants";
+} from './common/neo4j.utils';
+import { Neo4jModuleFactoryOptions, NodeDefinition } from './interfaces';
+import { print } from 'graphql/language';
+import { mergeTypeDefs } from '@graphql-tools/merge';
+import { NEO4J_MODULE_OPTIONS } from './neo4j.constants';
 
 export function createNeo4jTypeDefProvider(typeDefs: string[]): Provider {
   return {
@@ -33,9 +33,9 @@ export function createOGMProvider(typeDefs: string[], connectionName: string) {
     ) => {
       const baseTypeDefs = neo4jModuleOptions?.typeDefs || [];
       const defs = baseTypeDefs
-        .map((t) => (typeof t === "string" ? t : print(t)))
+        .map((t) => (typeof t === 'string' ? t : print(t)))
         .concat(typeDefs)
-        .join("\n\n");
+        .join('\n\n');
       const ogm = await createNeo4jOGM(
         defs,
         driver,
@@ -85,7 +85,7 @@ export async function createNeo4jOGM(
   driver: Driver,
   options?: any,
 ) {
-  if (!driver) throw new Error("Missing driver");
+  if (!driver) throw new Error('Missing driver');
 
   const config = Object.assign(options || {}, {
     typeDefs,
@@ -99,7 +99,7 @@ export async function createNeo4jOGM(
       ?.map((error: Error) => {
         return error.message;
       })
-      ?.join("\n");
+      ?.join('\n');
     throw new Error(`Cannot create Neo4j OGM ${error}`);
   }
   await ogm

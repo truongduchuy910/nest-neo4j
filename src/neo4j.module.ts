@@ -1,8 +1,8 @@
-import { DynamicModule, Logger } from "@nestjs/common";
-import { createNodeProvider } from "./neo4j.providers";
-import { Neo4jCoreModule } from "./neo4j.core";
-import { Neo4jModuleAsyncOptions } from "./interfaces";
-import { print } from "graphql/language";
+import { DynamicModule, Logger } from '@nestjs/common';
+import { createNodeProvider } from './neo4j.providers';
+import { Neo4jCoreModule } from './neo4j.core';
+import { Neo4jModuleAsyncOptions } from './interfaces';
+import { print } from 'graphql/language';
 
 export class Neo4jModule {
   static logger = new Logger(Neo4jModule.name);
@@ -28,7 +28,7 @@ export class Neo4jModule {
     nodes: { name: string; typeDefs: any }[] = [],
     connectionName?: string,
   ): DynamicModule {
-    if (!nodes.length) throw new Error("Node is empty");
+    if (!nodes.length) throw new Error('Node is empty');
 
     const [node] = nodes;
     Neo4jModule.logger.log(`🪛 for feature ${node.name}`);

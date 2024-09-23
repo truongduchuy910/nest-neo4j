@@ -6,24 +6,24 @@ import {
   OnApplicationShutdown,
   Provider,
   Type,
-} from "@nestjs/common";
-import { ModuleRef } from "@nestjs/core";
-import { Driver } from "neo4j-driver";
-import { Logger } from "@nestjs/common";
+} from '@nestjs/common';
+import { ModuleRef } from '@nestjs/core';
+import { Driver } from 'neo4j-driver';
+import { Logger } from '@nestjs/common';
 
-import { getDriverToken } from "./common/neo4j.utils";
+import { getDriverToken } from './common/neo4j.utils';
 import {
   Neo4jModuleAsyncOptions,
   Neo4jModuleFactoryOptions,
   Neo4jOptionsFactory,
-} from "./interfaces/neo4j-options.interface";
-import { NEO4J_CONNECTION_NAME, NEO4J_MODULE_OPTIONS } from "./neo4j.constants";
+} from './interfaces/neo4j-options.interface';
+import { NEO4J_CONNECTION_NAME, NEO4J_MODULE_OPTIONS } from './neo4j.constants';
 import {
   createNeo4jDriver,
   createNeo4jTypeDefProvider,
   createOGMProvider,
-} from "./neo4j.providers";
-import { OGM } from "@neo4j/graphql-ogm";
+} from './neo4j.providers';
+import { OGM } from '@neo4j/graphql-ogm';
 
 @Global()
 @Module({})
@@ -38,7 +38,7 @@ export class Neo4jCoreModule implements OnApplicationShutdown {
   ) {}
 
   onModuleInit() {
-    Neo4jCoreModule.logger.log("🪛 on module init");
+    Neo4jCoreModule.logger.log('🪛 on module init');
   }
 
   /**
@@ -49,7 +49,7 @@ export class Neo4jCoreModule implements OnApplicationShutdown {
     options: Neo4jModuleAsyncOptions,
     typeDefs: string[],
   ): DynamicModule {
-    Neo4jCoreModule.logger.log("🪛 For root async");
+    Neo4jCoreModule.logger.log('🪛 For root async');
     const neo4jDriverName = getDriverToken(options.connectionName);
 
     const neo4jDriverProvider = {
@@ -68,7 +68,7 @@ export class Neo4jCoreModule implements OnApplicationShutdown {
       ): Promise<Driver> => {
         const { uri, username, password } = neo4jModuleOptions;
         if (!uri || !username || !password) {
-          throw new Error("Missing options");
+          throw new Error('Missing options');
         }
 
         const driver = await createNeo4jDriver(uri, username, password);
@@ -107,7 +107,7 @@ export class Neo4jCoreModule implements OnApplicationShutdown {
   private static createAsyncProviders(
     options: Neo4jModuleAsyncOptions,
   ): Provider[] {
-    Neo4jCoreModule.logger.log("🪛 Create async provider");
+    Neo4jCoreModule.logger.log('🪛 Create async provider');
     if (options.useExisting || options.useFactory) {
       return [this.createAsyncOptionsProvider(options)];
     }
@@ -124,7 +124,7 @@ export class Neo4jCoreModule implements OnApplicationShutdown {
   private static createAsyncOptionsProvider(
     options: Neo4jModuleAsyncOptions,
   ): Provider {
-    Neo4jCoreModule.logger.log("🪛 Create async options provider");
+    Neo4jCoreModule.logger.log('🪛 Create async options provider');
     if (options.useFactory) {
       return {
         provide: NEO4J_MODULE_OPTIONS,
